@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   HttpException,
   HttpStatus,
@@ -23,8 +22,23 @@ export class TasksService {
     return newTask;
   }
 
-  findAll(params: FindAllParameters) {
-    return this.tasks;
+  findAll(params: FindAllParameters): TaskDto[] {
+    return this.tasks.filter((t) => {
+      let match = true;
+
+      if (
+        params.title != undefined &&
+        t.title.toLowerCase() != params.title.toLowerCase()
+      ) {
+        match = false;
+      }
+
+      if (params.status != undefined && t.status != params.status) {
+        match = false;
+      }
+
+      return match;
+    });
   }
 
   findById(id: string): TaskDto {
