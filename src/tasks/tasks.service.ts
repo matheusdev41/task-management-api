@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   HttpException,
   HttpStatus,
@@ -23,20 +26,29 @@ export class TasksService {
   }
 
   findAll(params: FindAllParameters): TaskDto[] {
+    console.log('PARAMS:', params);
+
     return this.tasks.filter((t) => {
       let match = true;
 
-      if (
-        params.title != undefined &&
-        t.title.toLowerCase() != params.title.toLowerCase()
-      ) {
+      const titleParam = Array.isArray(params.title)
+        ? params.title[0]
+        : params.title;
+
+      const statusParam = Array.isArray(params.status)
+        ? params.status[0]
+        : params.status;
+
+      const title = titleParam?.toLowerCase().trim();
+      const status = statusParam?.toLowerCase().trim();
+
+      if (title && !t.title.toLowerCase().includes(title)) {
         match = false;
       }
 
-      if (params.status != undefined && t.status != params.status) {
+      if (status && !t.status?.toLowerCase().includes(status)) {
         match = false;
       }
-
       return match;
     });
   }
