@@ -3,6 +3,7 @@ import {
   // Get,
   Post,
   Body,
+  Get,
   // Patch,
   // Param,
   // Delete,
@@ -19,10 +20,10 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
-  // @Get()
-  // findAll() {
-  //   return this.usersService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

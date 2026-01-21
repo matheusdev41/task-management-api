@@ -36,4 +36,10 @@ export class UsersService {
       where: { email },
     });
   }
+
+  async findAll() {
+    return this.userRepository.find({
+      select: ['id', 'email', 'createdAt'],
+    });
+  }
 }
